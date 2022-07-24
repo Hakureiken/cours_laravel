@@ -20,7 +20,5 @@ Route::get('/a-propos',[PagesController::class, "about"])->name('about');
 
 Route::get('/contact',[PagesController::class, "contact"])->name('contact');
 
-Route::get('/{err}', function () {
-    return "ERROR 404 !";
-});
+Route::get('/{x}', [PagesController::class, "err404"])->name('404');
 

@@ -24,4 +24,8 @@ class PagesController extends Controller
     public function contact() {
         return view("contact");
     }
+
+    public function err404() {
+        return view("404");
+    }
 }
