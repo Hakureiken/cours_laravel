@@ -12,7 +12,6 @@ class PagesController extends Controller
             "lastName" => "Doe",
             "age" => 25
         ];
-        return($data);
         
         return view("welcome", compact('data'));
     }
