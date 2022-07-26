@@ -21,14 +21,19 @@ Route::get('/a-propos',[PagesController::class, "about"])->name('about');
 
 Route::get('/contact',[PagesController::class, "contact"])->name('contact');
 
-// Route::get('/cars', [CarController::class, "index"])->name('cars.index');
+Route::get('/cars', [CarController::class, "index"])->name('cars.index');
 
-// Route::get('/cars/create', [CarController::class, "create"])->name('cars.create');
+Route::get('/cars/create', [CarController::class, "create"])->name('cars.create');
 
-// Route::get('/cars/{car}', [CarController::class, "show"])->name('cars.show');
+Route::post('/cars)', [CarController::class,"store"])->name('cars.store');
 
-// même chose que les 3 au dessus ça génère tout tout seul comme un grand
-Route::resource("cars",CarController::class);
+Route::get('/cars/{car}/edit', [CarController::class, "edit"])->name('cars.edit');
+
+Route::get('/cars/{car}', [CarController::class, "show"])->name('cars.show');
+
+
+// même chose que les 5 au dessus ça génère tout tout seul comme un grand
+// Route::resource("cars",CarController::class);
 
 // à la fin !!!
 Route::get('/{x}', [PagesController::class, "err404"])->name('404');
