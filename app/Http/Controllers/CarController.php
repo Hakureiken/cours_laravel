@@ -94,9 +94,9 @@ class CarController extends Controller
 
         // on peut faire ça aussi (en dessous)
 
-        // $data = Car::select("*")->where(['id' => $car->id])->firstOrFail();
+        $data = Car::select("*")->where(['id' => $car->id])->firstOrFail();
         // dd($data);
-        // return view("cars.edit", compact("data"));
+        return view("cars.edit", ["car"=>$data]);
     }
 
     /**

@@ -1,12 +1,12 @@
 @extends("layouts.app")
 
 @section("content")
-    <h1>create form</h1>
-    <form action="{{route('cars.store')}}" method="post">
+    <h1>Edit form</h1>
+    <form action="{{route('cars.update')}}" method="get">
         @csrf
         <div>
             <label for="brand">marque : </label>
-            <input type="text" id="brand" name="brand" required value="{{old('brand')}}">
+            <input type="text" id="brand" name="brand" required value="{{$car->brand}}">
             @error("brand")
             {{$message}}
             @enderror
