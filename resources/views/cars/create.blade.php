@@ -5,16 +5,29 @@
     <form action="{{route('cars.store')}}" method="post">
         @csrf
         <div>
-            <label for="brand">marque : </label>
-            <input type="text" id="brand" name="brand" required value="{{old('brand')}}">
-            @error("brand")
+            <label for="brand_id">marque : </label>
+            <select name="brand_id" id="brand_id">
+
+                @foreach($brands as $brand)
+                    <option value="{{$brand->id}}">{{$brand->name}}</option>
+                @endforeach
+
+            </select>
+
+            @error("brand_id")
             {{$message}}
             @enderror
         </div>
 
         <div>
-            <label for="type">modele : </label>
-            <input type="text" id="type" name="type" required value="{{old('type')}}">
+            <label for="type_id">modele : </label>
+            <select name="type_id" id="type_id">
+
+                @foreach($types as $type)
+                    <option value="{{$type->id}}">{{$type->name}}</option>
+                @endforeach
+                
+            </select>
         </div>
 
         <div>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use App\Models\Type;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreCarRequest;
 
@@ -15,7 +17,8 @@ class CarController extends Controller
      */
     public function index()
     {
-        $cars = Car::paginate(30);
+        $cars = Car::orderBy("id","desc")->paginate(30); // tri par ordre décroissant et affiche les 30 premiers
+        // $cars = Car::paginate(30);
         return view("cars.index", compact('cars'));
     }
 
@@ -26,7 +29,10 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view("cars.create");
+        // on importe la class brand et type pour les utiliser dans la vue create
+        $brands = Brand::all();
+        $types = Type::all();
+        return view("cars.create", compact('brands','types'));
     }
 
     /**
@@ -37,22 +43,11 @@ class CarController extends Controller
      */
     public function store(StoreCarRequest $request)
     {
-        // $request->validate([
-        //     "brand" => ["required","min:3"],
-        //     "type" => "required",
-        //     "price" => "required",
-        //     "weight" => "required",
-        //     "power" => "required",
-        //     "release_date" => "required",
-        //     "energy" => "required",
-        //     "thumbnail" => ["required","url"]
-        // ]);
-
-
 
         $car = new Car;
-        $car -> brand = $request -> brand;
-        $car -> type = $request -> type;
+
+        $car -> brand_id = $request -> brand;
+        $car -> type_id = $request -> type;
         $car -> price = $request -> price;
         $car -> weight = $request -> weight;
         $car -> power = $request -> power;
@@ -90,13 +85,16 @@ class CarController extends Controller
     {
         $cars = Car::all();
         $car = $cars->find($car);
-        return view('cars.edit', compact("car"));
+        // $brands = Brand::where("id","!=",$car->brand_id->get());
+        $brands = Brand::all();
+        $types = Type::all();
+        return view('cars.edit', compact("car","brands","types"));
 
         // on peut faire ça aussi (en dessous)
 
-        $data = Car::select("*")->where(['id' => $car->id])->firstOrFail();
-        // dd($data);
-        return view("cars.edit", ["car"=>$data]);
+        // $data = Car::select("*")->where(['id' => $car->id])->firstOrFail();
+        // // dd($data);
+        // return view("cars.edit", ["car"=>$data]);
     }
 
     /**
@@ -108,7 +106,18 @@ class CarController extends Controller
      */
     public function update(Request $request, Car $car)
     {
-        //
+        $car = Car::select("*")->where(['id' => $car->id])->firstOrFail();
+
+        $car -> brand_id = $request -> brand;
+        $car -> type_id = $request -> type;
+        $car -> price = $request -> price;
+        $car -> weight = $request -> weight;
+        $car -> power = $request -> power;
+        $car -> release_date = $request -> release_date;
+        $car -> energy = $request -> energy;
+        $car -> thumbnail = $request -> thumbnail;
+        $car->save();
+        return redirect() -> route('cars.show', $car -> id);
     }
 
     /**

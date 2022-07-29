@@ -34,7 +34,7 @@ Route::get('/cars/{car}/update', [CarController::class, "update"])->name('cars.u
 Route::get('/cars/{car}', [CarController::class, "show"])->name('cars.show');
 
 
-// même chose que les 5 au dessus ça génère tout tout seul comme un grand
+// même chose que les autres au dessus ça génère tout tout seul comme un grand
 // Route::resource("cars",CarController::class);
 
 // à la fin !!!

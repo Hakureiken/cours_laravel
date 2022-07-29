@@ -2,19 +2,32 @@
 
 @section("content")
     <h1>Edit form</h1>
-    <form action="{{route('cars.update')}}" method="get">
+    <form action="{{route('cars.update',$car)}}" method="get">
         @csrf
+        @method('PUT')
         <div>
-            <label for="brand">marque : </label>
-            <input type="text" id="brand" name="brand" required value="{{$car->brand}}">
-            @error("brand")
+            <label for="brand_id">marque : </label>
+            <select name="brand_id" id="brand_id">
+
+                @foreach($brands as $brand)
+                    <option value="{{$brand->id}}">{{$brand->name}}</option>
+                @endforeach
+
+            </select>
+            @error("brand_id")
             {{$message}}
             @enderror
         </div>
 
         <div>
-            <label for="type">modele : </label>
-            <input type="text" id="type" name="type" required value="{{old('type')}}">
+            <label for="type_id">modele : </label>
+            <select name="type_id" id="type_id">
+
+                @foreach($types as $type)
+                    <option value="{{$type->id}}">{{$type->name}}</option>
+                @endforeach
+                
+            </select>
         </div>
 
         <div>
@@ -47,6 +60,6 @@
             <input type="url" id="thumbnail" name="thumbnail" value="{{old('thumbnail')}}">
         </div>
 
-        <button type="submit">Créer ma voiture</button>
+        <button type="submit">modifier ma voiture</button>
     </form>
 @endsection
